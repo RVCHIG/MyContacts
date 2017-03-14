@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var btnSave: UIButton!
     @IBOutlet weak var status: UILabel!
-    @IBAction func btnSave(sender: AnyObject) {
+    @IBAction func btnSave(_ sender: AnyObject) {
         
     //1 Add Save Logic
         
@@ -33,10 +33,10 @@ class ViewController: UIViewController {
         else
         {
             let entityDescription =
-            NSEntityDescription.entityForName("Contact",inManagedObjectContext: managedObjectContext)
+            NSEntityDescription.entity(forEntityName: "Contact",in: managedObjectContext)
             
             let contact = Contact(entity: entityDescription!,
-                insertIntoManagedObjectContext: managedObjectContext)
+                insertInto: managedObjectContext)
             
             contact.fullname = fullname.text!
             contact.email = email.text!
@@ -52,24 +52,24 @@ class ViewController: UIViewController {
         if let err = error {
             status.text = err.localizedFailureReason
         } else {
-            self.dismissViewControllerAnimated(false, completion: nil)
+            self.dismiss(animated: false, completion: nil)
             
         }
         //**End Copy**
     }
     
-    @IBAction func btnBack(sender: AnyObject) {
+    @IBAction func btnBack(_ sender: AnyObject) {
     //2) Dismiss ViewController
         
         //**Begin Copy**
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
         //**End Copy**
     }
     
     //3) Add ManagedObject Data Context
     
         //**Begin Copy**
-    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         //**End Copy**
     
     //4) Add variable contactdb (used from UITableView
@@ -85,10 +85,10 @@ class ViewController: UIViewController {
         //**Begin Copy**
         if (contactdb != nil)
         {
-            fullname.text = contactdb.valueForKey("fullname") as? String
-            email.text = contactdb.valueForKey("email") as? String
-            phone.text = contactdb.valueForKey("phone") as? String
-            btnSave.setTitle("Update", forState: UIControlState.Normal)
+            fullname.text = contactdb.value(forKey: "fullname") as? String
+            email.text = contactdb.value(forKey: "email") as? String
+            phone.text = contactdb.value(forKey: "phone") as? String
+            btnSave.setTitle("Update", for: UIControlState())
         }
         fullname.becomeFirstResponder()
         // Do any additional setup after loading the view.
@@ -111,8 +111,8 @@ class ViewController: UIViewController {
     //6 Add to hide keyboard
     
     //**Begin Copy**
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches , withEvent:event)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches , with:event)
         if (touches.first as UITouch!) != nil {
             DismissKeyboard()
         }
@@ -134,7 +134,7 @@ class ViewController: UIViewController {
     //8 Add to hide keyboard
     
     //**Begin Copy**
-    func textFieldShouldReturn(textField: UITextField!) -> Bool     {
+    func textFieldShouldReturn(_ textField: UITextField!) -> Bool     {
         textField.resignFirstResponder()
         return true;
     }

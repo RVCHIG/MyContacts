@@ -23,18 +23,19 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
     //**Begin Copy**
     var filteredTableData = [NSManagedObject]()
     var resultSearchController = UISearchController()
+      var contactArray = [NSManagedObject]()
     //**End Copy**
    
     
 //3) Add UISearch func
     
     //**Begin Copy**
-    func updateSearchResultsForSearchController(searchController: UISearchController)
+    func updateSearchResults(for searchController: UISearchController)
     {
-        filteredTableData.removeAll(keepCapacity: false)
+        filteredTableData.removeAll(keepingCapacity: false)
         //search for field in CoreData
         let searchPredicate = NSPredicate(format: "fullname CONTAINS[c] %@", searchController.searchBar.text!)
-        let array = (contactArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        let array = (contactArray as NSArray).filtered(using: searchPredicate)
         filteredTableData = array as! [NSManagedObject]
     
         self.tableView.reloadData()
@@ -45,13 +46,13 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
 //4) Add variable to hold NSManagedObject
     
     //**Begin Copy**
-    var contactArray = [NSManagedObject]()
+  
     //**End Copy**
     
     //3) Add viewDidAppear (loads whenever view appears)
     
     //**Begin Copy**
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loaddb()
     }
@@ -64,14 +65,15 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
     {
         
         let appDelegate =
-        UIApplication.sharedApplication().delegate as! AppDelegate
+        UIApplication.shared.delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext
         
-        let fetchRequest = NSFetchRequest(entityName:"Contact")
+        //let fetchRequest = NSFetchRequest(entityName:"Contact")
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Contact")
 
             do {
-                let fetchedResults = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject]
+                let fetchedResults = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
                 if let results = fetchedResults {
                     contactArray = results
                     tableView.reloadData()
@@ -113,7 +115,7 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         //7) Change to return 1
         
         //**Begin Copy**
@@ -121,12 +123,12 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
         //**End Copy**
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         //8) Change to return contactArray.count
         
         //**Begin Copy**
-        if (self.resultSearchController.active) {
+        if (self.resultSearchController.isActive) {
             return filteredTableData.count
         }
         else {
@@ -137,43 +139,43 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
     }
     
   //9) Uncomment
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        //9a) Change below to load rows
         
          //**Begin Copy**
-        if (self.resultSearchController.active) {
+        if (self.resultSearchController.isActive) {
             let cell =
-            tableView.dequeueReusableCellWithIdentifier("Cell")
+            tableView.dequeueReusableCell(withIdentifier: "Cell")
                 as UITableViewCell!
-            let person = filteredTableData[indexPath.row]
-            cell.textLabel?.text = person.valueForKey("fullname") as! String?
-            cell.detailTextLabel?.text = ">>"
-            return cell
+            let person = filteredTableData[(indexPath as NSIndexPath).row]
+            cell?.textLabel?.text = person.value(forKey: "fullname") as! String?
+            cell?.detailTextLabel?.text = ">>"
+            return cell!
         }
         else {
             let cell =
-            tableView.dequeueReusableCellWithIdentifier("Cell")
+            tableView.dequeueReusableCell(withIdentifier: "Cell")
                 as UITableViewCell!
-            let person = contactArray[indexPath.row]
-            cell.textLabel?.text = person.valueForKey("fullname") as! String?
-            cell.detailTextLabel?.text = ">>"
-               return cell
+            let person = contactArray[(indexPath as NSIndexPath).row]
+            cell?.textLabel?.text = person.value(forKey: "fullname") as! String?
+            cell?.detailTextLabel?.text = ">>"
+               return cell!
         }
          //**End Copy**
      
     }
 
     //10) Add func tableView to show row clicked
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        print("You selected cell #\(indexPath.row)")
+        print("You selected cell #\((indexPath as NSIndexPath).row)")
     }
 
     //9) Uncomment
     
   
     // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
@@ -182,19 +184,19 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
 
 
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         //11 Change to delete swiped row
         
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
             let appDelegate =
-            UIApplication.sharedApplication().delegate as! AppDelegate
+            UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.managedObjectContext
-            if (self.resultSearchController.active) {
-                context.deleteObject(filteredTableData[indexPath.row])
+            if (self.resultSearchController.isActive) {
+                context.delete(filteredTableData[(indexPath as NSIndexPath).row])
             }
             else {
-                  context.deleteObject(contactArray[indexPath.row])
+                  context.delete(contactArray[(indexPath as NSIndexPath).row])
             }
             
             var error: NSError? = nil
@@ -210,28 +212,11 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
  
     }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-  
-    // MARK: - Navigation
     
    // 12) Uncomment prepareforseque
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -240,17 +225,17 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
         
         //**Begin Copy**
         if segue.identifier == "UpdateContacts" {
-            if let destination = segue.destinationViewController as?
+            if let destination = segue.destination as?
                 ViewController {
-                    if (self.resultSearchController.active) {
-                        if let SelectIndex = tableView.indexPathForSelectedRow?.row {
+                    if (self.resultSearchController.isActive) {
+                        if let SelectIndex = (tableView.indexPathForSelectedRow as NSIndexPath?)?.row {
                             let selectedDevice:NSManagedObject = filteredTableData[SelectIndex] as NSManagedObject
                             destination.contactdb = selectedDevice
-                             resultSearchController.active = false
+                             resultSearchController.isActive = false
                         }
                     }
                     else {
-                        if let SelectIndex = tableView.indexPathForSelectedRow?.row {
+                        if let SelectIndex = (tableView.indexPathForSelectedRow as NSIndexPath?)?.row {
                             let selectedDevice:NSManagedObject = contactArray[SelectIndex] as NSManagedObject
                             destination.contactdb = selectedDevice
                         }

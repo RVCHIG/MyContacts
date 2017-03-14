@@ -107,6 +107,7 @@
 				TargetAttributes = {
 					36943C491BCC2A4200F388BD = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -275,6 +276,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rockvalleycollege.edu.MyContacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "fe4d8db9-98a5-42d2-8b1b-f1e451ceb996";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -289,6 +291,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rockvalleycollege.edu.MyContacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "fe4d8db9-98a5-42d2-8b1b-f1e451ceb996";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
