@@ -205,7 +205,7 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
                 loaddb()
             } catch let error1 as NSError {
                 error = error1
-                print("Unresolved error \(error)")
+                print("Unresolved error \(String(describing: error))")
                 abort()
             }
         }
