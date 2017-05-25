@@ -17,19 +17,19 @@ import Foundation
 //1) Add Delegates to right of UITableViewController
 //                    ,UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate
 class ContactTableViewController: UITableViewController,UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
-    
+//**Begin Copy**
 //2) Add filter search vars
-    
-    //**Begin Copy**
+   
     var filteredTableData = [NSManagedObject]()
     var resultSearchController = UISearchController()
       var contactArray = [NSManagedObject]()
-    //**End Copy**
-   
     
+//**End Copy**
+   
+//**Begin Copy**
 //3) Add UISearch func
     
-    //**Begin Copy**
+  
     func updateSearchResults(for searchController: UISearchController)
     {
         filteredTableData.removeAll(keepingCapacity: false)
@@ -40,27 +40,21 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
     
         self.tableView.reloadData()
     }
-    //**End Copy**
+//**End Copy**
     
+//**Begin Copy**
     
-//4) Add variable to hold NSManagedObject
+//4) Add viewDidAppear (loads whenever view appears)
     
-    //**Begin Copy**
-  
-    //**End Copy**
-    
-    //3) Add viewDidAppear (loads whenever view appears)
-    
-    //**Begin Copy**
-    override func viewWillAppear(_ animated: Bool) {
+      override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loaddb()
     }
-    //**End Copy**
+//**End Copy**
     
+//**Begin Copy**
 //5) Add func loaddb to load database and refresh table
     
-    //**Begin Copy**
     func loaddb()
     {
         
@@ -85,15 +79,14 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
                 print("Fetch failed: \(error.localizedDescription),\(error.userInfo)")
             }
     }
-    //**End Copy**
+//**End Copy**
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//**Begin Copy**
 //6 Add Search Delegates 
-        
-    //**Begin Copy**
+
        self.resultSearchController.delegate = self
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -106,7 +99,7 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
             return controller
         })()
     }
-    //**End Copy**
+//**End Copy**
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -116,33 +109,32 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+//**Begin Copy**
         //7) Change to return 1
-        
-        //**Begin Copy**
         return 1
-        //**End Copy**
+//**End Copy**
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+//**Begin Copy**
         //8) Change to return contactArray.count
         
-        //**Begin Copy**
         if (self.resultSearchController.isActive) {
             return filteredTableData.count
         }
         else {
             return contactArray.count
         }
-        //**End Copy**
+//**End Copy**
 
     }
     
-  //9) Uncomment
+  //9) Uncomment func
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       //9a) Change below to load rows
+//**Begin Copy**
+    //9a) Change below to load rows
         
-         //**Begin Copy**
         if (self.resultSearchController.isActive) {
             let cell =
             tableView.dequeueReusableCell(withIdentifier: "Cell")
@@ -161,31 +153,28 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
             cell?.detailTextLabel?.text = ">>"
                return cell!
         }
-         //**End Copy**
+//**End Copy**
      
     }
-
+//**Begin Copy**
     //10) Add func tableView to show row clicked
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         print("You selected cell #\((indexPath as NSIndexPath).row)")
     }
+//**End Copy**
 
-    //9) Uncomment
-    
-  
+    //9) Uncomment func
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
-    //10) Uncomment func tableView
-
-
+    //10) Uncomment func
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
+//**Begin Copy**
         //11 Change to delete swiped row
         
         if editingStyle == .delete {
@@ -209,21 +198,20 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
                 abort()
             }
         }
- 
+ //**End Copy**
     }
 
     
-   // 12) Uncomment prepareforseque
+   // 12) Uncomment func prepareforseque
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
+//**Begin Copy**
         //13) Uncomment & Change to go to proper record on proper Viewcontroller
         
-        //**Begin Copy**
         if segue.identifier == "UpdateContacts" {
             if let destination = segue.destination as?
                 ViewController {
@@ -243,6 +231,6 @@ class ContactTableViewController: UITableViewController,UISearchResultsUpdating,
               }
          }
     }
-       //**End Copy**
+//**End Copy**
 
 }

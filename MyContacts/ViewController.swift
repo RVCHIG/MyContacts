@@ -17,11 +17,43 @@ class ViewController: UIViewController {
     @IBOutlet weak var phone: UITextField!
     @IBOutlet weak var btnSave: UIButton!
     @IBOutlet weak var status: UILabel!
-    @IBAction func btnSave(_ sender: AnyObject) {
+     @IBOutlet weak var btnCall: UIButton!
+    @IBOutlet weak var btnEdit: UIButton!
+    
+    @IBAction func btnEdit(_ sender: UIButton) {
+         //**Begin Copy**
         
+         //0a Edit contact
+        fullname.isEnabled = true
+        email.isEnabled = true
+        phone.isEnabled = true
+        btnSave.isHidden = false
+        btnEdit.isHidden = true
+        fullname.becomeFirstResponder()
+        
+         //**End Copy**
+    }
+    
+    @IBAction func btnCall(_ sender: UIButton) {
+         //**Begin Copy**
+        
+        //0b Call Number
+        
+        //if number not null
+        if (phone.text !=  ""){
+             let formatedNumber = phone.text!.components(separatedBy: NSCharacterSet.decimalDigits.inverted).joined(separator: "")
+        print("calling \(formatedNumber)")
+        let phoneUrl = "tel://\(formatedNumber)"
+        let url:URL = URL(string: phoneUrl)!
+        UIApplication.shared.open(url)
+        }
+        //**End Copy**
+    }
+    @IBAction func btnSave(_ sender: AnyObject) {
+    //**Begin Copy**
     //1 Add Save Logic
         
-        //**Begin Copy**
+        
         if (contactdb != nil)
         {
             
@@ -50,6 +82,7 @@ class ViewController: UIViewController {
         }
         
         if let err = error {
+            //if error occurs
             status.text = err.localizedFailureReason
         } else {
             self.dismiss(animated: false, completion: nil)
@@ -59,36 +92,49 @@ class ViewController: UIViewController {
     }
     
     @IBAction func btnBack(_ sender: AnyObject) {
-    //2) Dismiss ViewController
-        
+    
         //**Begin Copy**
+        //2) Dismiss ViewController
         self.dismiss(animated: false, completion: nil)
         //**End Copy**
     }
     
+    //**Begin Copy**
     //3) Add ManagedObject Data Context
-    
-        //**Begin Copy**
     let managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        //**End Copy**
+    //**End Copy**
     
+    
+    //**Begin Copy**
     //4) Add variable contactdb (used from UITableView
-    
-        //**Begin Copy**
     var contactdb:NSManagedObject!
-        //**End Copy**
+    //**End Copy**
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    //5 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
-        
+   
         //**Begin Copy**
+        //5 Add logic to load db. If contactdb has content that means a row was tapped on UiTableView
+        
+      
         if (contactdb != nil)
         {
             fullname.text = contactdb.value(forKey: "fullname") as? String
             email.text = contactdb.value(forKey: "email") as? String
             phone.text = contactdb.value(forKey: "phone") as? String
             btnSave.setTitle("Update", for: UIControlState())
+            btnCall.isHidden = false
+            btnEdit.isHidden = false
+            fullname.isEnabled = false
+             email.isEnabled = false
+             phone.isEnabled = false
+            btnSave.isHidden = true
+        }else{
+            btnCall.isHidden = true
+           btnEdit.isHidden = true
+            fullname.isEnabled = true
+            email.isEnabled = true
+            phone.isEnabled = true
         }
         fullname.becomeFirstResponder()
         // Do any additional setup after loading the view.
@@ -108,9 +154,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //6 Add to hide keyboard
     
     //**Begin Copy**
+    //6 Add to hide keyboard
+   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches , with:event)
         if (touches.first as UITouch!) != nil {
@@ -119,9 +166,10 @@ class ViewController: UIViewController {
     }
     //**End Copy**
     
-    //7 Add to hide keyboard
     
     //**Begin Copy**
+    //7 Add to hide keyboard
+   
     func DismissKeyboard(){
         //forces resign first responder and hides keyboard
         fullname.endEditing(true)
@@ -131,9 +179,10 @@ class ViewController: UIViewController {
     }
     //**End Copy**
     
+    //**Begin Copy**
+    
     //8 Add to hide keyboard
     
-    //**Begin Copy**
     func textFieldShouldReturn(_ textField: UITextField!) -> Bool     {
         textField.resignFirstResponder()
         return true;

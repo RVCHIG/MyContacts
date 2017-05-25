@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		366DF8901ED78D17005A9D3E /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 366DF88F1ED78D17005A9D3E /* iTunesArtwork@2x.png */; };
 		36943C4E1BCC2A4300F388BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C4D1BCC2A4300F388BD /* AppDelegate.swift */; };
 		36943C501BCC2A4300F388BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36943C4F1BCC2A4300F388BD /* ViewController.swift */; };
 		36943C531BCC2A4300F388BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36943C511BCC2A4300F388BD /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		366DF88F1ED78D17005A9D3E /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
 		36943C4A1BCC2A4200F388BD /* MyContacts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyContacts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36943C4D1BCC2A4300F388BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36943C4F1BCC2A4300F388BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		366DF88E1ED78D02005A9D3E /* images */ = {
+			isa = PBXGroup;
+			children = (
+				366DF88F1ED78D17005A9D3E /* iTunesArtwork@2x.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		36943C411BCC2A4200F388BD = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +75,7 @@
 		36943C4C1BCC2A4200F388BD /* MyContacts */ = {
 			isa = PBXGroup;
 			children = (
+				366DF88E1ED78D02005A9D3E /* images */,
 				36943C4D1BCC2A4300F388BD /* AppDelegate.swift */,
 				36943C4F1BCC2A4300F388BD /* ViewController.swift */,
 				36943C511BCC2A4300F388BD /* Main.storyboard */,
@@ -107,7 +118,9 @@
 				TargetAttributes = {
 					36943C491BCC2A4200F388BD = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = LAK6SGQ7Q5;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -137,6 +150,7 @@
 				36943C5B1BCC2A4300F388BD /* LaunchScreen.storyboard in Resources */,
 				36943C581BCC2A4300F388BD /* Assets.xcassets in Resources */,
 				36943C531BCC2A4300F388BD /* Main.storyboard in Resources */,
+				366DF8901ED78D17005A9D3E /* iTunesArtwork@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,14 +287,17 @@
 		36943C601BCC2A4300F388BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = LAK6SGQ7Q5;
 				INFOPLIST_FILE = MyContacts/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rockvalleycollege.edu.MyContacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fe4d8db9-98a5-42d2-8b1b-f1e451ceb996";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -288,14 +305,17 @@
 		36943C611BCC2A4300F388BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = LAK6SGQ7Q5;
 				INFOPLIST_FILE = MyContacts/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.rockvalleycollege.edu.MyContacts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fe4d8db9-98a5-42d2-8b1b-f1e451ceb996";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
